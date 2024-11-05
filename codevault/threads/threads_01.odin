@@ -28,13 +28,22 @@ main :: proc() {
 	idx_1, idx_2: int
 	idx_1 = 1
 	idx_2 = 2
-	if posix.pthread_create(&t1, nil, routine, &idx_1) != os.Err {
+
+	if posix.pthread_create(&t1, nil, routine, &idx_1) != .NONE {
 		log.error("Failed creating thread 1")
-		return
-
+		os.exit(1)
 	}
-	posix.pthread_create(&t2, nil, routine, &idx_2)
+	if posix.pthread_create(&t2, nil, routine, &idx_2) != .NONE {
+		log.error("Failed creating thread 2")
+		os.exit(2)
+	}
 
-	posix.pthread_join(t1, nil)
-	posix.pthread_join(t2, nil)
+	if posix.pthread_join(t1, nil) != .NONE {
+		log.error("Failed joining thread 1")
+		os.exit(3)
+	}
+	if posix.pthread_join(t2, nil) != .NONE {
+		log.error("Failed joining thread 2")
+		os.exit(4)
+	}
 }
