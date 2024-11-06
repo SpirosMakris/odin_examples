@@ -8,7 +8,7 @@
       "type": "lldb",
       "request": "launch",
       "name": "Debug",
-      "program": "${workspaceFolder}/channels.bin",
+      "program": "${workspaceFolder}/threads_03_race_condition",
       "args": [],
       "cwd": "${workspaceFolder}"
     }
